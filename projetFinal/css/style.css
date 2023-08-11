@@ -1,0 +1,85 @@
+.grid {
+    display: grid;
+    grid-template-columns: repeat(25, 34px); /* Modifier la taille de colonne à 64px */
+    grid-template-rows: repeat(15, 34px); /* Modifier la taille de ligne à 64px */
+    gap: 0px;
+    
+}
+h1{
+    text-align: center;
+    color: bisque;
+    text-shadow:1px 1px 0;
+}
+body {
+    background-image: url('../img/359960363_1071041107212948_2078851263761614537_n.jpg'); /* Remplacez 'chemin/vers/votre/image.jpg' par le chemin de votre image */
+    background-size: cover; /* Redimensionne l'image pour couvrir tout l'arrière-plan */
+    background-repeat: no-repeat; /* Empêche la répétition de l'image en arrière-plan */
+  }
+
+
+.empty {
+    background-image: url('../img/empty2.jpeg'); 
+    background-size: cover;
+} 
+
+
+
+.player {
+    background-image: url('../img/player.jpeg'); 
+    background-size: cover;
+}
+
+
+.monster {
+    
+    background-image: url('../img/monster.png'); 
+    background-size: cover;
+    
+} 
+
+.treasure {
+    background-image: url('../img/tresor.jpg'); 
+    background-size: cover;
+}
+
+.wall {
+    background-image: url('../img/wall.jpeg'); 
+    background-size: cover;
+}
+
+/* Nouveau style pour le conteneur des boutons de contrôle */
+#controls-container {
+    position: fixed;
+    top: 120px;
+    right: 150px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+
+/* Styles pour les boutons de contrôle */
+#controls-container button {
+    width: 80px;
+    height: 80px;
+    margin: 5px;
+    font-size: 16px;
+}
+#btnRestart{
+    position: fixed;
+    top: 310px;
+    right: 150px;
+    padding: 20px;
+    margin-top: 5px;
+    width: 179px;
+    height: 70px;
+}
+
+/* Nouveau style pour les boutons de contrôle "Haut" et "Bas" */
+#controls-container .row-buttons {
+    flex-direction: row;
+}
+
+/* Nouveau style pour les boutons de contrôle "Gauche" et "Droite" */
+#controls-container .column-buttons {
+    flex-direction: column;
+}

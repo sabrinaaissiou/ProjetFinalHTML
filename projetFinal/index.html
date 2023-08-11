@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<head>
+    <title>Jeu de Donjon</title>
+    <link rel="stylesheet" type="text/css" href="./css/style.css">
+    <script src="./js/scipt.js" defer></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+</head>
+<body>
+    <h1>Jeu de Donjon</h1>
+    
+    <div id="score">Score: 0</div>
+    <div class="grid" id="grid"></div>
+
+    <!-- Conteneur des boutons de contrôle en haut à droite par rapport au body -->
+    <div id="controls-container">
+        <!-- Boutons "Haut" et "Bas" en ligne (flex direction row) -->
+        <div class="row-buttons">
+            <button id="btnUp"><i class="fas fa-chevron-up"></i></button>
+            <button id="btnLeft"><i class="fas fa-chevron-left"></i></button>
+            
+        </div>
+        <!-- Boutons "Gauche" et "Droite" en colonne (flex direction column) -->
+        <div class="column-buttons">
+         
+            <button id="btnDown"><i class="fas fa-chevron-down"></i></button>
+            <button id="btnRight"><i class="fas fa-chevron-right"></i></button>
+        </div>
+        
+       
+    </div>
+    
+    <button id="btnRestart">Recommencer</button>
+    <div class="popup" id="popup">
+        <h2>Vous avez gagné !</h2>
+        <!-- Le div du pop-up de défaite -->
+<div class="popup" id="losePopup">
+    <h2>Game Over !</h2>
+    <!-- Autres contenus du pop-up, si besoin -->
+</div>
+
+    <!-- Inclure la bibliothèque Font Awesome -->
+    
+
+</body>
+</html>
