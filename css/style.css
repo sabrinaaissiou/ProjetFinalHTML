@@ -108,11 +108,10 @@ body {
     margin-top: 10px; 
     margin-bottom: 10px;
 }
-
 #btnRestart {
     
     position: fixed;
-    bottom: 100px;
+    bottom: 80px;
     right: 115px;
     padding: 20px;
     width: 179px;

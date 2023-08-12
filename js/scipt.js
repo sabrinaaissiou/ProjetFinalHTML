@@ -6,6 +6,7 @@ function shuffle(array) {
     }
 }
 
+
 // Fonction pour créer la grille
 function createGrid() {
     const gridElement = document.getElementById('grid');
@@ -23,14 +24,14 @@ function createGrid() {
     }
     
 
-    // Ajouter une fonction pour générer un labyrinthe à l'aide de l'algorithme Recursive Backtracking
+// fonction pour générer un labyrinthe 
     function generateMaze(x, y) {
         const directions = [
-            [0, -2], // Up
-            [0, 2],  // Down
-            [-2, 0], // Left
-            [2, 0]   // Right
-        ];
+            [0, -2], 
+            [0, 2],  
+            [-2, 0], 
+            [2, 0]   
+    ];
 
         shuffle(directions); // Mélanger les directions pour éviter les circuits fermés
 
@@ -51,67 +52,70 @@ function createGrid() {
         }
     }
 
-    // Générer le labyrinthe en commençant depuis une position aléatoire
+    // Génération du  labyrinthe en commençant depuis une position aléatoire
     const startX = Math.floor(Math.random() * 12) * 2 + 1;
     const startY = Math.floor(Math.random() * 7) * 2 + 1;
     generateMaze(startX, startY);
 
-        // Placer les monstres aléatoirement à l'intérieur du labyrinthe
-for (let i = 0; i < 3; i++) {
-let randomX, randomY;
-do {
+
+    // Placement des monstres dune maniere aleatoire
+    for (let i = 0; i < 3; i++) {
+    let randomX, randomY;
+    do {
     randomX = Math.floor(Math.random() * 23) + 1; // Limiter les positions pour éviter les bords
     randomY = Math.floor(Math.random() * 13) + 1;
-} while (grid[randomY][randomX].classList.contains('wall') || grid[randomY][randomX].classList.contains('monster'));
+    } while (grid[randomY][randomX].classList.contains('wall') || grid[randomY][randomX].classList.contains('monster'));
 
-grid[randomY][randomX].classList.add('monster');
-}
+    grid[randomY][randomX].classList.add('monster');
+    }
 
-//placer les treosrs
+
+    //placer les tresors
+
     const mazeWidth = 25; // Largeur du labyrinthe
-const mazeHeight = 15; // Hauteur du labyrinthe
-
-for (let i = 0; i < 5; i++) {
-let randomX, randomY;
-let maxAttempts = 100; // Limite d'essais pour éviter une boucle infinie
-
-do {
-randomX = Math.floor(Math.random() * mazeWidth);
-randomY = Math.floor(Math.random() * mazeHeight);
-
-maxAttempts--;
-} while (
-(grid[randomY][randomX].classList.contains('wall') ||
-grid[randomY][randomX].classList.contains('treasure') ||
-!isAccessibleFromStart(grid, randomX, randomY, startX, startY)) &&
-maxAttempts > 0
-);
-
-if (maxAttempts === 0) {
-console.log("Impossible de placer un trésor accessible.");
-break; // Sortir de la boucle si on ne peut pas placer de trésor
-}
-
-grid[randomY][randomX].classList.add('treasure-cell');
-grid[randomY][randomX].classList.add('treasure');
-}
+    const mazeHeight = 15; // Hauteur du labyrinthe
 
 
+    for (let i = 0; i < 5; i++) {
+    let randomX, randomY;
+    let maxAttempts = 100; 
 
-// Fonction pour marquer les cellules accessibles via "flood fill"
-function isAccessibleFromStart(grid, x, y, startX, startY) {
-let visited = new Array(grid.length).fill(false).map(() => new Array(grid[0].length).fill(false));
-let queue = [{ x: startX, y: startY }];
+    do {
+    randomX = Math.floor(Math.random() * mazeWidth);
+    randomY = Math.floor(Math.random() * mazeHeight);
+    maxAttempts--;
+    } while (
+    (grid[randomY][randomX].classList.contains('wall') ||
+    grid[randomY][randomX].classList.contains('treasure') ||
+    !isAccessibleFromStart(grid, randomX, randomY, startX, startY)) &&
+    maxAttempts > 0
+     );
 
-while (queue.length > 0) {
-let current = queue.shift();
+    if (maxAttempts === 0) {
+    console.log("Impossible de placer un trésor accessible.");
+    break; 
+    }
 
-if (current.x === x && current.y === y) {
+    grid[randomY][randomX].classList.add('treasure-cell');
+    grid[randomY][randomX].classList.add('treasure');
+    }
+
+
+
+    // Fonction pour marquer les cellules accessibles 
+    function isAccessibleFromStart(grid, x, y, startX, startY) {
+    let visited = new Array(grid.length).fill(false).map(() => new Array(grid[0].length).fill(false));
+    let queue = [{ x: startX, y: startY }];
+
+    while (queue.length > 0) {
+    let current = queue.shift();
+
+    if (current.x === x && current.y === y) {
     return true;
-}
+    }
 
-for (let dx = -1; dx <= 1; dx++) {
-    for (let dy = -1; dy <= 1; dy++) {
+    for (let dx = -1; dx <= 1; dx++) {
+      for (let dy = -1; dy <= 1; dy++) {
         if (dx === 0 && dy === 0) continue;
 
         let newX = current.x + dx;
@@ -126,15 +130,16 @@ for (let dx = -1; dx <= 1; dx++) {
             visited[newY][newX] = true;
             queue.push({ x: newX, y: newY });
         }
+       }
+      }
     }
-}
-}
 
-return false;
+        return false;
 }
 
     return grid;
 }
+
 
 // Classe Monstre pour représenter les monstres
 class Monstre {
@@ -146,8 +151,7 @@ class Monstre {
 
 function checkCollision() {
     if (donjon.isGameOver()) {
-        drawGameOver();
-        // Le jeu s'est déjà terminé, n'effectuez pas de vérification supplémentaire.
+       
         return;
     }
 
@@ -156,18 +160,23 @@ function checkCollision() {
     // Vérifier si la case du joueur contient un monstre
     if (playerCell.classList.contains('monster')) {
         donjon.gameOver = true;
-        drawGameOver();
+        alert('Game Over! Votre score : ' + donjon.score);
         return;
     }
-}
-function drawGameOver() {
-    ctx.textalign='center';
-   ctx.fillStyle='black';
-   ctx.filltext('GAME OVER,your code is :'+donjon.getScore,canvas.width/2,canvas,height/2)
-}
-// 
 
-// Classe Donjon pour gérer la logique du jeu
+    // Vérifier si la case du joueur contient un trésor
+    if (playerCell.classList.contains('treasure')) {
+        donjon.score++;
+        playerCell.classList.remove('treasure');
+        if (donjon.score >= 5) {
+            donjon.gameOver = true;
+            alert('Vous avez gagné! Votre score : ' + donjon.score);
+        }
+    }
+}
+
+
+// Classe Donjon qui sert a gerer la logique du jeu
 class Donjon {
     constructor(grid) {
         this.grid = grid;
@@ -196,7 +205,7 @@ class Donjon {
         const newCell = this.grid[newY][newX];
 
         if (newX >= 0 && newX < 25 && newY >= 0 && newY < 15 && !newCell.classList.contains('wall')) {
-            // Vérifier si la nouvelle cellule contient un monstre
+       
             if (newCell.classList.contains('monster')) {
                 this.gameOver = true;
                 alert('Game Over! Votre score : ' + this.score);
@@ -211,12 +220,12 @@ class Donjon {
             this.playerX = newX;
             this.playerY = newY;
 
-            if (this.score >= 5) { // À adapter selon le nombre de trésors dans le donjon
+            if (this.score >= 5) { 
                 this.gameOver = true;
-                alert('Vous avez gagné! Votre score : ' + this.score);
+                alert('Vous avez gagne! Votre score : ' + this.score);
             }
 
-            this.checkCollision(); // Vérifier également la collision après chaque déplacement du joueur
+            this.checkCollision(); 
         }
     }
 
@@ -228,7 +237,7 @@ class Donjon {
         }
     }
 
-   // ...
+  
 
 
 
@@ -245,7 +254,7 @@ moveMonsters() {
         let newX = monster.x;
         let newY = monster.y;
 
-        // Choisir la direction la plus proche du joueur
+        // Choix de la direction la plus proche du joueur
         if (Math.abs(dx) > Math.abs(dy)) {
             newX = monster.x + Math.sign(dx);
         } else {
@@ -259,6 +268,7 @@ moveMonsters() {
             !this.grid[newY][newX].classList.contains('treasure') &&
             !this.grid[newY][newX].classList.contains('monster')
         ) {
+
             // Mettre à jour la position du monstre
             this.grid[monster.y][monster.x].classList.remove('monster');
             monster.x = newX;
@@ -268,11 +278,6 @@ moveMonsters() {
     }
 }
 
-// ...
-
- 
-
-// ...
 
 
     getGrid() {
@@ -288,13 +293,14 @@ moveMonsters() {
     }
 }
 
+
 // Initialiser la grille et le jeu
 const grid = createGrid();
-let donjon = new Donjon(grid); // Changer "const" en "let" pour pouvoir réinitialiser la variable
+let donjon = new Donjon(grid); 
 
-// Fonction pour mettre à jour l'affichage de la grille et du score
+// Fonction qui met à jour l'affichage de la grille et du score
 function updateGridAndScore() {
-    // Mettre à jour l'affichage de la grille
+
     const grid = donjon.getGrid();
     for (let y = 0; y < 15; y++) {
         for (let x = 0; x < 25; x++) {
@@ -303,36 +309,36 @@ function updateGridAndScore() {
         }
     }
 
-    // Mettre à jour l'affichage du score
     document.getElementById('score').innerText = 'Score: ' + donjon.getScore();
 }
-donjon.moveMonsters(); // Appel à moveMonsters après le déplacement du joueur
+
+donjon.moveMonsters(); // Appel à moveMonsters apres que le joueur se deplace 
+
 // Gérer les déplacements du joueur avec les boutons de contrôle
 btnUp.addEventListener('click', () => {
     donjon.movePlayer(0, -1);
     donjon.moveMonsters();
-    checkCollision(); // Ajouter cet appel ici
+    checkCollision(); 
     updateGridAndScore();
 });
 
 btnDown.addEventListener('click', () => {
     donjon.movePlayer(0, 1);
     donjon.moveMonsters();
-    checkCollision(); // Ajouter cet appel ici
-    updateGridAndScore();
+    checkCollision();
 });
 
 btnLeft.addEventListener('click', () => {
     donjon.movePlayer(-1, 0);
     donjon.moveMonsters();
-    checkCollision(); // Ajouter cet appel ici
+    checkCollision(); 
     updateGridAndScore();
 });
 
 btnRight.addEventListener('click', () => {
     donjon.movePlayer(1, 0);
     donjon.moveMonsters();
-    checkCollision(); // Ajouter cet appel ici
+    checkCollision(); 
     updateGridAndScore();
 });
 
@@ -341,34 +347,36 @@ document.addEventListener('keydown', (event) => {
     if (event.key === 'ArrowUp') {
         donjon.movePlayer(0, -1);
         donjon.moveMonsters();
-        checkCollision(); // Ajouter cet appel ici
+        checkCollision(); 
         updateGridAndScore();
     } else if (event.key === 'ArrowDown') {
         donjon.movePlayer(0, 1);
         donjon.moveMonsters();
-        checkCollision(); // Ajouter cet appel ici
+        checkCollision(); 
         updateGridAndScore();
     } else if (event.key === 'ArrowLeft') {
         donjon.movePlayer(-1, 0);
         donjon.moveMonsters();
-        checkCollision(); // Ajouter cet appel ici
+        checkCollision(); 
         updateGridAndScore();
     } else if (event.key === 'ArrowRight') {
         donjon.movePlayer(1, 0);
         donjon.moveMonsters();
-        checkCollision(); // Ajouter cet appel ici
+        checkCollision();
         updateGridAndScore();
     }
 });
 
-// Récupérer le bouton "Recommencer"
+
+// Récupération du  bouton "Recommencer"
 const btnRestart = document.getElementById('btnRestart');
 
 // Gérer le clic sur le bouton "Recommencer"
+
 btnRestart.addEventListener('click', () => {
     // Réinitialiser la grille et le jeu
     const gridElement = document.getElementById('grid');
-    gridElement.innerHTML = ''; // Effacer la grille existante
+    gridElement.innerHTML = ''; 
     const newGrid = createGrid();
     donjon = new Donjon(newGrid);
     donjon.score = 0;
